@@ -1,6 +1,8 @@
 package com.jordiribeiro.cursomc.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,6 +17,8 @@ public class Categoria implements Serializable {
 		@GeneratedValue(strategy=GenerationType.IDENTITY)
 		private Integer id;
 		private String nome;
+		
+		private List<Produto>Produto=new ArrayList<>()	;
 		
 		public Categoria () {
 		}
@@ -64,6 +68,14 @@ public class Categoria implements Serializable {
 			} else if (!id.equals(other.id))
 				return false;
 			return true;
+		}
+
+		public List<Produto> getProduto() {
+			return Produto;
+		}
+
+		public void setProduto(List<Produto> produto) {
+			Produto = produto;
 		}
 		
 		
