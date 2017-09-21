@@ -1,18 +1,30 @@
 package com.jordiribeiro.cursomc.domain;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 
-public class Produto {
+@Entity
+public class Produto implements Serializable{
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	private String nome;
 	private Double preco;
-	private List<Categoria> categoria;
+	
+	@ManyToMany
+	@JoinTable(name="PRODUTO_categorias",
+joinColumns=@JoinColumn(name="produto_id"),
+inverseJoinColumns = @JoinColumn (name="categorias_id")) 
+	private List<Categoria> categorias =new ArrayList<>();
 	private static final long serialVersionUID = 1L;
 
 	
@@ -44,17 +56,17 @@ public class Produto {
 	public void setPreco(Double preco) {
 		this.preco = preco;
 	}
-	public List<Categoria> getCategoria() {
-		return categoria;
+	public List<Categoria> getCategorias() {
+		return categorias;
 	}
-	public void setCategoria(List<Categoria> categoria) {
-		this.categoria = categoria;
+	public void setCategorias(List<Categoria> categorias) {
+		this.categorias = categorias;
 	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((categoria == null) ? 0 : categoria.hashCode());
+		result = prime * result + ((categorias == null) ? 0 : categorias.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
 		result = prime * result + ((preco == null) ? 0 : preco.hashCode());
@@ -69,10 +81,10 @@ public class Produto {
 		if (getClass() != obj.getClass())
 			return false;
 		Produto other = (Produto) obj;
-		if (categoria == null) {
-			if (other.categoria != null)
+		if (categorias == null) {
+			if (other.categorias != null)
 				return false;
-		} else if (!categoria.equals(other.categoria))
+		} else if (!categorias.equals(other.categorias))
 			return false;
 		if (id == null) {
 			if (other.id != null)
