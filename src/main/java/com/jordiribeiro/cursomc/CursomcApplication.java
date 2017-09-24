@@ -14,6 +14,7 @@ import com.jordiribeiro.cursomc.domain.Cidade;
 import com.jordiribeiro.cursomc.domain.Cliente;
 import com.jordiribeiro.cursomc.domain.Endereco;
 import com.jordiribeiro.cursomc.domain.Estado;
+import com.jordiribeiro.cursomc.domain.ItemPedido;
 import com.jordiribeiro.cursomc.domain.Pagamento;
 import com.jordiribeiro.cursomc.domain.PagamentoComBoleto;
 import com.jordiribeiro.cursomc.domain.PagamentoComCartao;
@@ -26,6 +27,7 @@ import com.jordiribeiro.cursomc.repositories.CidadeRepository;
 import com.jordiribeiro.cursomc.repositories.ClienteRepository;
 import com.jordiribeiro.cursomc.repositories.EnderecoRepository;
 import com.jordiribeiro.cursomc.repositories.EstadoRepository;
+import com.jordiribeiro.cursomc.repositories.ItemPedidoRepository;
 import com.jordiribeiro.cursomc.repositories.PagamentoRepository;
 import com.jordiribeiro.cursomc.repositories.PedidoRepository;
 import com.jordiribeiro.cursomc.repositories.ProdutoRepository;
@@ -51,9 +53,11 @@ public class CursomcApplication implements CommandLineRunner{
 	private EnderecoRepository enderecorepository;
 	
 	@Autowired
-	 	private PedidoRepository pedidorepository;
+	private PedidoRepository pedidorepository;
 	@Autowired
-	 	private PagamentoRepository pagamentorepository;
+	private PagamentoRepository pagamentorepository;
+	@Autowired
+ 	private ItemPedidoRepository itempedidorepository;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(CursomcApplication.class, args);
@@ -133,6 +137,23 @@ public class CursomcApplication implements CommandLineRunner{
 		
 		pedidorepository.save(Arrays.asList(ped1,ped2));
 		pagamentorepository.save(Arrays.asList(pagto1,pagto2));
+		
+		
+		ItemPedido ip1=new ItemPedido(ped1,p1,0.00,1,2000.00);
+		ItemPedido ip2=new ItemPedido(ped1,p3,0.00,2,80.00);
+		ItemPedido ip3=new ItemPedido(ped2,p2,100.00,1,800.00);
+		
+		
+		ped1.getItens().addAll(Arrays.asList(ip1,ip2));
+		ped2.getItens().addAll(Arrays.asList(ip3));
+		
+		p1.getItens().addAll(Arrays.asList(ip1));
+		p2.getItens().addAll(Arrays.asList(ip3));
+		p3.getItens().addAll(Arrays.asList(ip2));
+		
+		itempedidorepository.save(Arrays.asList(ip1,ip2,ip3));
+		
+		
 	}
 	
 }
