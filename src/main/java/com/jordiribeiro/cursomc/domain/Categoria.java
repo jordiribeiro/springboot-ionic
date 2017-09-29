@@ -21,7 +21,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 		private Integer id;
 		private String nome;
 		
-		@JsonManagedReference
+		
 		@ManyToMany(mappedBy="categorias")
 		private List<Produto>Produto=new ArrayList<>()	;
 		
