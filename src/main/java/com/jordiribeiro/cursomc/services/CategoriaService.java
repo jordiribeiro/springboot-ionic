@@ -15,7 +15,7 @@ public class CategoriaService {
 	@Autowired
 	private CategoriaRepository repo;
 	
-	public Categoria buscar(Integer id) {
+	public Categoria find(Integer id) {
 		Categoria obj=repo.findOne(id);
 		
 		if(obj==null) {
@@ -28,12 +28,16 @@ public class CategoriaService {
 		repo.save(obj);
 	}
 	public void delete(Integer id) {
-		buscar(id);
+		find(id);
 		try {
 			repo.delete(id);
 		}catch (DataIntegrityViolationException e) {
 			throw new DataIntegrityException("Não é possivel excluir uma categoria que possua produtos");
 		}
 		
+	}
+	public Categoria update(Categoria obj) {
+		find(obj.getId());
+		return repo.save(obj);
 	}
 }
