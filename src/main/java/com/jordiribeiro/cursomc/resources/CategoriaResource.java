@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import org.springframework.data.domain.Page;
 
 import com.jordiribeiro.cursomc.CategoriaDTO;
 import com.jordiribeiro.cursomc.domain.Categoria;
@@ -55,5 +56,12 @@ public class CategoriaResource {
 			List<Categoria> list = service.findAll();
 			List<CategoriaDTO> listDTO = list.stream().map(obj -> new CategoriaDTO(obj)).collect(Collectors.toList());
 			return ResponseEntity.ok().body(listDTO);
+		}
+		@RequestMapping(value = "/page/{page}/{linesPerPage}/{direction}/{sortBy}", method = RequestMethod.GET)
+		public ResponseEntity<Page<CategoriaDTO>> findPage(@PathVariable Integer page, @PathVariable Integer linesPerPage,
+				@PathVariable String direction, @PathVariable String sortBy) {
+			Page<Categoria> result = service.findPage(page, linesPerPage, direction, sortBy);
+			Page<CategoriaDTO> resultDTO = result.map(obj -> new CategoriaDTO(obj));
+			return ResponseEntity.ok().body(resultDTO);
 		}
 }
