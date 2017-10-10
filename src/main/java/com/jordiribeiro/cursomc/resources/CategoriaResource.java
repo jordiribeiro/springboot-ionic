@@ -4,6 +4,8 @@ import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,8 +34,12 @@ public class CategoriaResource {
 			Categoria obj=service.find(id);
 			return ResponseEntity.ok().body(obj);
 		}
+		
+		
+		
 		@RequestMapping(method=RequestMethod.POST)
-		public ResponseEntity<Void> inserir(@RequestBody Categoria obj){
+		public ResponseEntity<Void> inserir(@Valid @RequestBody CategoriaDTO objdto){
+			Categoria obj=service.fromDTO(objdto);
 			service.inserir(obj);
 			URI uri =ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 			
@@ -45,13 +51,18 @@ public class CategoriaResource {
 			return ResponseEntity.noContent().build();
 		}
 		
+		
+		
 		@RequestMapping(value="/{id}",method=RequestMethod.PUT)
-		public ResponseEntity<Void> update(@RequestBody Categoria obj,@PathVariable Integer id) {
+		public ResponseEntity<Void> update(@Valid @RequestBody CategoriaDTO objdto,@PathVariable Integer id) {
+			Categoria obj=service.fromDTO(objdto);
 			obj.setId(id);
 			obj=service.update(obj);
 			return ResponseEntity.noContent().build();
 		
 		}
+		
+		
 		@RequestMapping(method=RequestMethod.GET)
 		public ResponseEntity<List<CategoriaDTO>> findAll() {
 			List<Categoria> list = service.findAll();
