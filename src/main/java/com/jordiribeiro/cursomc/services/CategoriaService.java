@@ -48,8 +48,8 @@ public class CategoriaService {
 	public List<Categoria> findAll() {
 				return repo.findAll();
 	}
-	public Page<Categoria> findPage(Integer page, Integer linesPerPage, String direction, String sortBy) {
-			PageRequest pageRequest = new PageRequest(page, linesPerPage, Direction.valueOf(direction), sortBy);
+	public Page<Categoria> findPage(Integer page, Integer linesPerPage, String orderBy ,String direction) {
+			PageRequest pageRequest = new PageRequest(page, linesPerPage, Direction.valueOf(direction), orderBy);
 			return repo.findAll(pageRequest);
 	}
 }
