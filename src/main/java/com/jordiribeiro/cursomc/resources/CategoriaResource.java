@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.data.domain.Page;
 
-import com.jordiribeiro.cursomc.CategoriaDTO;
 import com.jordiribeiro.cursomc.domain.Categoria;
+import com.jordiribeiro.cursomc.dto.CategoriaDTO;
 import com.jordiribeiro.cursomc.services.CategoriaService;
 
 @RestController

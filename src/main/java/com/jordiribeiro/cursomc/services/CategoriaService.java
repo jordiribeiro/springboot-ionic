@@ -9,8 +9,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
-import com.jordiribeiro.cursomc.CategoriaDTO;
 import com.jordiribeiro.cursomc.domain.Categoria;
+import com.jordiribeiro.cursomc.dto.CategoriaDTO;
 import com.jordiribeiro.cursomc.repositories.CategoriaRepository;
 import com.jordiribeiro.cursomc.services.exceptions.DataIntegrityException;
 import com.jordiribeiro.cursomc.services.exceptions.ObjectNotFoundException;

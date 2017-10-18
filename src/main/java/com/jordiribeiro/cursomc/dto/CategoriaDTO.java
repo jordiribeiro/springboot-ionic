@@ -1,4 +1,4 @@
-package com.jordiribeiro.cursomc;
+package com.jordiribeiro.cursomc.dto;
 
 import java.io.Serializable;
 
