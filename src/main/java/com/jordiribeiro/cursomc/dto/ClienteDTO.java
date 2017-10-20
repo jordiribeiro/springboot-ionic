@@ -8,7 +8,9 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import com.jordiribeiro.cursomc.domain.Categoria;
 import com.jordiribeiro.cursomc.domain.Cliente;
+import com.jordiribeiro.cursomc.services.validation.ClienteUpdate;
 
+@ClienteUpdate
 public class ClienteDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
