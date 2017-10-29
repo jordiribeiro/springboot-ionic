@@ -57,7 +57,13 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
  		this.cliente = cliente;
  		this.enderecoDeEntrega = enderecoDeEntrega;
  	}
- 
+ 	public double getValorTotal() {
+ 		double soma = 0.0;
+ 		for (ItemPedido ip : itens) {
+ 			soma = soma + ip.getSubTotal();
+ 		}
+ 		return soma;
+ 	}
  	public Integer getId() {
  		return id;
  	}
