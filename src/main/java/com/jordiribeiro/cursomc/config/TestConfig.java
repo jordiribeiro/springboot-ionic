@@ -8,6 +8,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 import com.jordiribeiro.cursomc.services.DbService;
+import com.jordiribeiro.cursomc.services.EmailService;
+import com.jordiribeiro.cursomc.services.MockMailService;
 
 @Configuration
 @Profile("test")
@@ -22,5 +24,11 @@ public class TestConfig {
 		dbservice.instantiateTestDatabase();
 		return true;
 		
+	}
+	
+	//Compoennte
+	@Bean
+	public EmailService emailService() {
+		return new MockMailService();
 	}
 }
