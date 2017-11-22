@@ -14,6 +14,7 @@ import com.jordiribeiro.cursomc.domain.Categoria;
 import com.jordiribeiro.cursomc.domain.Cidade;
 import com.jordiribeiro.cursomc.domain.Cliente;
 import com.jordiribeiro.cursomc.domain.Endereco;
+import com.jordiribeiro.cursomc.domain.enums.Perfil;
 import com.jordiribeiro.cursomc.domain.enums.TipoCliente;
 import com.jordiribeiro.cursomc.domain.Cliente;
 import com.jordiribeiro.cursomc.dto.ClienteDTO;
@@ -21,6 +22,8 @@ import com.jordiribeiro.cursomc.dto.ClienteNewDTO;
 import com.jordiribeiro.cursomc.repositories.CidadeRepository;
 import com.jordiribeiro.cursomc.repositories.ClienteRepository;
 import com.jordiribeiro.cursomc.repositories.EnderecoRepository;
+import com.jordiribeiro.cursomc.security.UserSS;
+import com.jordiribeiro.cursomc.services.exceptions.AuthorizationException;
 import com.jordiribeiro.cursomc.services.exceptions.DataIntegrityException;
 import com.jordiribeiro.cursomc.services.exceptions.ObjectNotFoundException;
 
@@ -40,6 +43,13 @@ public class ClienteService {
 	private BCryptPasswordEncoder bep;
 	
 	public Cliente find(Integer id) {
+		
+		UserSS user= UserService.authenticated();
+		
+		if(user == null || !user.hasRole(Perfil.ADMIN) && !id.equals(user.getID())) {
+			throw new AuthorizationException("Acesso Negado");
+		}
+		
 		Cliente obj=repo.findOne(id);
 		
 		if(obj==null) {
