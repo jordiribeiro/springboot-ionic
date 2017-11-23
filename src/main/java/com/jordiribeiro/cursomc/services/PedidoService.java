@@ -3,8 +3,13 @@ package com.jordiribeiro.cursomc.services;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
+import com.jordiribeiro.cursomc.domain.Categoria;
+import com.jordiribeiro.cursomc.domain.Cliente;
 import com.jordiribeiro.cursomc.domain.ItemPedido;
 import com.jordiribeiro.cursomc.domain.PagamentoComBoleto;
 import com.jordiribeiro.cursomc.domain.Pedido;
@@ -14,6 +19,8 @@ import com.jordiribeiro.cursomc.repositories.ItemPedidoRepository;
 import com.jordiribeiro.cursomc.repositories.PagamentoRepository;
 import com.jordiribeiro.cursomc.repositories.PedidoRepository;
 import com.jordiribeiro.cursomc.repositories.ProdutoRepository;
+import com.jordiribeiro.cursomc.security.UserSS;
+import com.jordiribeiro.cursomc.services.exceptions.AuthorizationException;
 import com.jordiribeiro.cursomc.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -74,4 +81,17 @@ public class PedidoService {
  		
  		return obj;
  	}
+	public Page<Pedido> findPage(Integer page, Integer linesPerPage, String orderBy ,String direction) {
+		UserSS user=UserService.authenticated();
+		
+		if(user==null) {
+			throw new AuthorizationException("Acesso Negado");
+		}
+		
+		PageRequest pageRequest = new PageRequest(page, linesPerPage, Direction.valueOf(direction), orderBy);
+		
+		Cliente cliente= clienterepository.findOne(user.getID());
+		
+		return repo.findByCliente(cliente, pageRequest);
+	}
 }
